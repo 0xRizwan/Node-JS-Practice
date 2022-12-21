@@ -21,11 +21,12 @@ const server = http.createServer((req,res) => {
         req.on("end", () => {
             const parsedBody = Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
-            fs.writeFileSync("NewFile.txt", message);
+            fs.writeFileSync("NewFile.txt", message);             //Blocking code.......it is synchronous js.
+        
+           res.statusCode = 302;
+           res.setHeader("Location", "/");
+           return res.end();
         })
-        res.statusCode = 302;
-        res.setHeader("Location", "/");
-        return res.end();
     }
 })
 server.listen(3000);
